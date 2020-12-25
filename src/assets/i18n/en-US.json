@@ -1,0 +1,28 @@
+{
+  "GENERIC": {
+    "HELP": "Help"
+  },
+  "REQUESTS": {
+    "FIELDS": {
+      "ACTION": "Action",
+      "COMPANY": "Company",
+      "EIN": "EIN",
+      "ENTRY_DATE": "Entry date",
+      "ID": "ID",
+      "MINUTES": "Minutes",
+      "PLAN": "Plan",
+      "PLAN_VALUE": "Plan value",
+      "SEND_DATE": "Send date",
+      "TAX": "Tax"
+    },
+    "FORM": {
+      "CREATE_REQUEST": "Create request"
+    },
+    "TITLES": {
+      "FOLLOW_PROGRESS": "Here you can follow your requests progress",
+      "INSERT_DATA": "Insert here register data for a new request",
+      "MY_REQUESTS": "My requests",
+      "NEW_REQUEST": "New request"
+    }
+  }
+}

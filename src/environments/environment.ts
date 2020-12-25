@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  api: {
+    applicationId: 'cristianoAscari',
+    url: 'https://agdo-server.appspot.com/solicitacoes'
+  }
 };
 
 /*

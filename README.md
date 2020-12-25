@@ -5,6 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Config
 
 - Executar 'npm install' e 'npm install --only=dev'.
+- O comando 'ng serve' executa em localhost:4200 e 'npm start' em localhost:2021 (apenas para evitar conflitos com outros projetos).
 
 ## Development server
 

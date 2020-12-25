@@ -1,0 +1,28 @@
+{
+  "GENERIC": {
+    "HELP": "Ajuda"
+  },
+  "REQUESTS": {
+    "FIELDS": {
+      "ACTION": "Ação",
+      "COMPANY": "Empresa",
+      "EIN": "CNPJ",
+      "ENTRY_DATE": "Data de adesão",
+      "ID": "ID",
+      "MINUTES": "Minutos",
+      "PLAN": "Plano",
+      "PLAN_VALUE": "Valor do Plano",
+      "SEND_DATE": "Data de envio",
+      "TAX": "Tarifa"
+    },
+    "FORM": {
+      "CREATE_REQUEST": "Adicionar solicitação"
+    },
+    "TITLES": {
+      "FOLLOW_PROGRESS": "Aqui você pode acompanhar o andamento de suas solicitações",
+      "INSERT_DATA": "Insira aqui os dados cadastrais para uma nova solicitação",
+      "MY_REQUESTS": "Minhas solicitações",
+      "NEW_REQUEST": "Nova solicitação"
+    }
+  }
+}

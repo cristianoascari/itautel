@@ -1,3 +1,7 @@
 export const environment = {
-  production: true
+  production: true,
+  api: {
+    applicationId: 'cristianoAscari',
+    url: 'https://agdo-server.appspot.com/solicitacoes'
+  }
 };
