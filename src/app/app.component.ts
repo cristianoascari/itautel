@@ -4,6 +4,9 @@ import { Component } from '@angular/core';
 // Third-party.
 import { TranslateService } from '@ngx-translate/core';
 
+// App services.
+import { AuthService } from '@app/core/';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,11 +14,27 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
 
+  // Status.
+  public isLoading: boolean = true;
+
   // Constructor method.
-  constructor(protected translate: TranslateService) {
+  constructor(
+    protected authService: AuthService,
+    protected translate: TranslateService
+  ) {
 
     // Set current language.
     this.setLanguage();
+
+    // Authenticate user.
+    this.authUser();
+
+  }
+
+  // Authenticate user.
+  private authUser(): void {
+
+    this.authService.login('alfred@wayne.com', '10203040').finally(() => this.isLoading = false);
 
   }
 

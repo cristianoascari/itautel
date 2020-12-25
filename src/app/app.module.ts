@@ -12,6 +12,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from '@app/app-routing.module';
 
 // App modules.
+import { CoreModule } from '@app/core/core.module';
 import { MaterialModule } from '@app/shared/material/material.module';
 
 // App components.
@@ -48,6 +49,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader { retur
     AppRoutingModule,
 
     // App modules.
+    CoreModule,
     MaterialModule
 
   ],
