@@ -1,4 +1,5 @@
 // Angular modules.
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -8,10 +9,13 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 // App routing.
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from '@app/app-routing.module';
+
+// App modules.
+import { MaterialModule } from '@app/shared/material/material.module';
 
 // App components.
-import { AppComponent } from './app.component';
+import { AppComponent } from '@app/app.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader { return new TranslateHttpLoader(http); }
@@ -26,6 +30,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader { retur
   imports: [
 
     // Angular modules.
+    BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
 
@@ -40,7 +45,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader { retur
     }),
 
     // App routing.
-    AppRoutingModule
+    AppRoutingModule,
+
+    // App modules.
+    MaterialModule
 
   ],
   providers: [],

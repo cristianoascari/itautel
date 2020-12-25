@@ -11,8 +11,6 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
 
-  title = 'itautel';
-
   // Constructor method.
   constructor(protected translate: TranslateService) {
 

@@ -2,9 +2,17 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "./out-tsc/spec",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
     "types": [
       "jasmine"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "./src/typings.d.ts"
     ]
   },
   "files": [
