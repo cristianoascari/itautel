@@ -17,6 +17,10 @@ import { MaterialModule } from '@app/shared/material/material.module';
 
 // App components.
 import { AppComponent } from '@app/app.component';
+import { FormComponent } from '@app/components/form/form.component';
+import { HeaderComponent } from '@app/components/header/header.component';
+import { ListComponent } from '@app/components/list/list.component';
+import { HelpComponent } from './components/help/help.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader { return new TranslateHttpLoader(http); }
@@ -25,7 +29,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader { retur
   declarations: [
 
     // App components.
-    AppComponent
+    AppComponent,
+    FormComponent,
+    HeaderComponent,
+    ListComponent,
+    HelpComponent
 
   ],
   imports: [

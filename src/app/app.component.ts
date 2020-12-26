@@ -4,8 +4,14 @@ import { Component } from '@angular/core';
 // Third-party.
 import { TranslateService } from '@ngx-translate/core';
 
+// App environment.
+import { environment } from '@env/environment';
+
+// App enumerators.
+import { EBroadcast } from '@app/core';
+
 // App services.
-import { AuthService } from '@app/core/';
+import { AuthService, BroadcastService } from '@app/core/';
 
 @Component({
   selector: 'app-root',
@@ -20,14 +26,18 @@ export class AppComponent {
   // Constructor method.
   constructor(
     protected authService: AuthService,
+    private broadcastService: BroadcastService,
     protected translate: TranslateService
   ) {
 
     // Set current language.
-    this.setLanguage();
+    this.setDeafultLanguage();
 
     // Authenticate user.
     this.authUser();
+
+    // Listen to broadcast messages.
+    this.listenToBroadcast();
 
   }
 
@@ -38,11 +48,37 @@ export class AppComponent {
 
   }
 
-  // Set active language.
-  private setLanguage(): void {
+  // Listen to broadcast events.
+  private listenToBroadcast(): void {
 
-    const lan: string = this.translate.getBrowserLang().toLowerCase();
-    this.translate.use(['en', 'en-US'].indexOf(lan) > -1 ? 'en-US' : 'pt-BR');
+    this.broadcastService.events.subscribe(ev => {
+
+      switch (ev.key) {
+
+        // Change language.
+        case EBroadcast.ChangeLanguage: this.setLanguage(ev.value); break;
+
+      }
+
+    });
+
+  }
+
+  // Set active language.
+  private setDeafultLanguage(): void {
+
+    const savedLang: string = localStorage.getItem(environment.localStorage.language);
+    const browserLang: string = this.translate.getBrowserLang().toLowerCase();
+    const lang: string = savedLang || browserLang;
+    this.setLanguage(['en', 'en-US'].indexOf(lang) > -1 ? 'en-US' : 'pt-BR');
+
+  }
+
+  // Set active language.
+  private setLanguage(lang: string): void {
+
+    this.translate.use(lang);
+    localStorage.setItem(environment.localStorage.language, lang);
 
   }
 

@@ -1,5 +1,6 @@
 {
   "GENERIC": {
+    "CLOSE": "Close",
     "HELP": "Help"
   },
   "REQUESTS": {
@@ -24,5 +25,17 @@
       "MY_REQUESTS": "My requests",
       "NEW_REQUEST": "New request"
     }
+  },
+  "TRANSLATE": {
+    "LANGUAGE": "Language",
+    "LANGUAGES": {
+      "ENUS": "English",
+      "PTBR": "Portuguese"
+    }
+  },
+  "USER": {
+    "MY_ACCOUNT": "My account",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Log out"
   }
 }

@@ -1,0 +1,57 @@
+<mat-toolbar layout="row" layout-align="center start">
+  
+  <!-- Logo. -->
+  <img class="img-logo" src="assets/images/itaubba.png">
+
+  <!-- Space. -->
+  <span class="spn-spacer"></span>
+
+  <!-- Help. -->
+  <button mat-button (click)="showHelp()">
+    <mat-icon>help_outline</mat-icon>
+    <span class="spn-help">{{'GENERIC.HELP' | translate | lowercase}}</span>
+  </button>
+
+  <!-- Divider. -->
+  <mat-divider [vertical]="true"></mat-divider>
+
+  <!-- User's menu. -->
+  <mat-list>
+    <mat-list-item>
+      <div class="user-avatar" mat-list-icon>{{abbrName}}</div>
+      <div mat-line>{{user.name}}</div>
+      <div mat-line>{{user.company}} </div>
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+
+</mat-toolbar>
+
+<!-- User menu. -->
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item disabled>
+    <mat-icon>account_circle</mat-icon>
+    <span>{{'USER.MY_ACCOUNT' | translate}}</span>
+  </button>
+  <button mat-menu-item [matMenuTriggerFor]="langMenu">
+    <mat-icon>translate</mat-icon>
+    <span>{{'TRANSLATE.LANGUAGE' | translate}}</span>
+  </button>
+  <button mat-menu-item disabled>
+    <mat-icon>settings</mat-icon>
+    <span>{{'USER.SETTINGS' | translate}}</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item disabled>
+    <mat-icon>power_settings_new</mat-icon>
+    <span>{{'USER.LOGOUT' | translate}}</span>
+  </button>
+</mat-menu>
+
+<!-- Languages menu. -->
+<mat-menu #langMenu="matMenu">
+  <button mat-menu-item (click)="changeLanguage($event, 'en-US')">{{'TRANSLATE.LANGUAGES.ENUS' | translate}}</button>
+  <button mat-menu-item (click)="changeLanguage($event, 'pt-BR')">{{'TRANSLATE.LANGUAGES.PTBR' | translate}}</button>
+</mat-menu>

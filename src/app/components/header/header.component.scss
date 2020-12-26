@@ -1,0 +1,42 @@
+@import '~assets/styles/theme.scss';
+
+.mat-toolbar {
+
+  background: #f7eeeb;
+  color: #222;
+  font-size: small;
+
+  .img-logo { width: 75px; }
+
+  .spn-spacer { flex: 1 1 auto; }
+
+  .mat-divider {
+    height: 50px;
+    margin: 0 10px;
+  }
+
+  .user-avatar {
+    background-color: $primary-color;
+    border-radius: 50%;
+    color: #fff;
+    font-size: small;
+    height: 35px;
+    margin-top: -5px;
+    padding: 5px 0 0 0;
+    text-align: center;
+    width: 40px;
+  }
+  
+  .mat-line {
+    font-size: x-small;
+    margin-left: -10px;
+    margin-top: -15px;
+    &:first-of-type {
+      font-size: small;
+      margin-top: -5px;
+    }
+  }
+  
+  .mat-menu-trigger { margin-top: -7px; }
+
+}

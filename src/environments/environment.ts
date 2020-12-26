@@ -10,6 +10,7 @@ export const environment = {
   },
   cryptoKey: 'gremio!',
   localStorage: {
+    language: 'lang',
     userData: 'u'
   }
 };
