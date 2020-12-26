@@ -6,7 +6,10 @@
   color: #222;
   font-size: small;
 
-  .img-logo { width: 75px; }
+  .img-logo {
+    margin-left: 30px; // TEMP: CORRIGIR ALINHAMENTO DO HEADER (INCLUIR MAX-WIDTH).
+    width: 75px;
+  }
 
   .spn-spacer { flex: 1 1 auto; }
 
@@ -14,6 +17,8 @@
     height: 50px;
     margin: 0 10px;
   }
+
+  /*::ng-deep.mat-list-item-content { padding-right: 0; }*/
 
   .user-avatar {
     background-color: $primary-color;
