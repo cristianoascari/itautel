@@ -1,5 +1,9 @@
 // Angular modules.
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+// Third-party.
+import { TranslateService } from '@ngx-translate/core';
 
 // App environment.
 import { environment } from '@env/environment';
@@ -11,7 +15,10 @@ import { IUser } from '@app/core';
 export class AuthService {
 
   // Constructor method.
-  constructor() {}
+  constructor(
+    private http: HttpClient,
+    private translate: TranslateService
+  ) {}
 
   // Authenticate user.
   public login(
@@ -57,6 +64,19 @@ export class AuthService {
       resolve(null);
     });
     return promise;
+
+  }// Return default HTTP header.
+  public getHttpHeaders(): HttpHeaders {
+
+    let header: HttpHeaders;
+    header = new HttpHeaders({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      applicationId: environment.api.applicationId,
+      locale: this.translate.currentLang || 'pt-BR'
+    });
+    return header;
 
   }
 
