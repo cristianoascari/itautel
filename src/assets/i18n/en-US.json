@@ -16,6 +16,16 @@
       "SEND_DATE": "Send date",
       "TAX": "Tax"
     },
+    "ERRORS": {
+      "COMPANY": "Company name is required",
+      "EIN": "CNPJ is required",
+      "ENTRY_DATE": "Entry date is required",
+      "MINUTES": "Minutes is required",
+      "PLAN": "Select a plan",
+      "PLAN_VALUE": "Plan value is required",
+      "SEND_DATE": "Send date is required",
+      "TAX": "Tax is required"
+    },
     "FORM": {
       "CREATE_REQUEST": "Create request"
     },

@@ -1,1 +1,111 @@
-<p>form works!</p>
+<h1 class="mat-body-strong">{{'REQUESTS.TITLES.NEW_REQUEST' | translate}}</h1>
+
+<h2 class="mat-small">{{'REQUESTS.TITLES.INSERT_DATA' | translate}}</h2>
+
+<form *ngIf="!isLoading && formData" [formGroup]="formData" (ngSubmit)="save()">
+
+  <div class="form-fields">
+
+    <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
+
+      <!-- Company. -->
+      <mat-grid-tile [colspan]="2">
+        <mat-form-field appearance="legacy" floatLabel="always" style="width: 100%">
+          <mat-label>{{'REQUESTS.FIELDS.COMPANY' | translate}}</mat-label>
+          <input matInput formControlName="empresa" id="empresa" #empresa>
+          <mat-hint *ngIf="controls.empresa.touched && controls.empresa.errors && controls.empresa.errors.required">
+            {{'REQUESTS.ERRORS.COMPANY' | translate}}
+          </mat-hint>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- CNPJ/EIN. -->
+      <mat-grid-tile [colspan]="1">
+        <mat-form-field appearance="legacy" floatLabel="always">
+          <mat-label>{{'REQUESTS.FIELDS.EIN' | translate}}</mat-label>
+          <input matInput formControlName="cnpj" id="cnpj" #cnpj>
+          <mat-hint *ngIf="controls.cnpj.touched && controls.cnpj.errors && controls.cnpj.errors.required">
+            {{'REQUESTS.ERRORS.EIN' | translate}}
+          </mat-hint>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- PLAN. -->
+      <mat-grid-tile [colspan]="1">
+        <mat-form-field appearance="legacy" floatLabel="always">
+          <mat-label>{{'REQUESTS.FIELDS.PLAN' | translate}}</mat-label>
+          <mat-select formControlName="plano" id="plano" #plano>
+            <mat-option *ngFor="let plan of plans" [value]="plan">{{plan}}</mat-option>
+          </mat-select>
+          <!--<input matInput formControlName="plano" id="plano" #plano>-->
+          <mat-hint *ngIf="controls.plano.touched && controls.plano.errors && controls.plano.errors.required">
+            {{'REQUESTS.ERRORS.PLAN' | translate}}
+          </mat-hint>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- Tax. -->
+      <mat-grid-tile [colspan]="1">
+        <mat-form-field appearance="legacy" floatLabel="always">
+          <mat-label>{{'REQUESTS.FIELDS.TAX' | translate}}</mat-label>
+          <input matInput formControlName="tarifa" id="tarifa" #tarifa>
+          <mat-hint *ngIf="controls.tarifa.touched && controls.tarifa.errors && controls.tarifa.errors.required">
+            {{'REQUESTS.ERRORS.TAX' | translate}}
+          </mat-hint>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- Minutes. -->
+      <mat-grid-tile [colspan]="1">
+        <mat-form-field appearance="legacy" floatLabel="always">
+          <mat-label>{{'REQUESTS.FIELDS.MINUTES' | translate}}</mat-label>
+          <input matInput formControlName="minutos" id="minutos" #minutos>
+          <mat-hint *ngIf="controls.minutos.touched && controls.minutos.errors && controls.minutos.errors.required">
+            {{'REQUESTS.ERRORS.MINUTES' | translate}}
+          </mat-hint>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- Plan value. -->
+      <mat-grid-tile [colspan]="1">
+        <mat-form-field appearance="legacy" floatLabel="always">
+          <mat-label>{{'REQUESTS.FIELDS.PLAN_VALUE' | translate}}</mat-label>
+          <input matInput formControlName="valor" id="valor" #valor>
+          <mat-hint *ngIf="controls.valor.touched && controls.valor.errors && controls.valor.errors.required">
+            {{'REQUESTS.ERRORS.PLAN_VALUE' | translate}}
+          </mat-hint>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- Add date. -->
+      <mat-grid-tile [colspan]="1">
+        <mat-form-field appearance="legacy" floatLabel="always">
+          <mat-label>{{'REQUESTS.FIELDS.ENTRY_DATE' | translate}}</mat-label>
+
+          <!--<input matInput type="date" formControlName="dataAd" id="dataAd" #dataAd [value]="formData.get('dataAd').value">-->
+          <input matInput type="date" formControlName="dataAd" id="dataAd" #dataAd>
+          
+          <!--<input matInput [matDatepicker]="dtPicker" formControlName="dataAd" id="dataAd" #dataAd>
+          <mat-datepicker-toggle matSuffix [for]="dtPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dtPicker></mat-datepicker>-->
+          <!--<mat-hint *ngIf="controls.dataAd.touched && controls.dataAd.errors.required">
+            {{'REQUESTS.ERRORS.ENTRY_DATE' | translate}}
+          </mat-hint>-->
+
+        </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+  </div>
+
+  <div class="form-actions">
+
+    <!-- Save button. -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="!formData.valid">
+      {{'REQUESTS.FORM.CREATE_REQUEST' | translate}}
+    </button>
+
+  </div>
+
+</form>

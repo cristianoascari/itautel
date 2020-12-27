@@ -1,5 +1,12 @@
 // Angular modules.
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+
+// Third-party.
+import { TranslateService } from '@ngx-translate/core';
+
+// App enumerators.
+import { EPlan } from '@app/core';
 
 // App interfaces.
 import { IRequest } from '@app/core';
@@ -17,22 +24,43 @@ export class FormComponent implements OnInit {
   // Request data.
   @Input() request: IRequest = this.buildRequest(true);
 
+  // Form.
+  public formData: any = null;
+  public controls: FormControl = null;
+  public activeDate: string = null;
+
+  // Plans.
+  public plans: any[] = [];
+  public plansOptions: any = EPlan;
+
   // Status.
-  public isLoading: boolean = false;
+  public isLoading: boolean = true;
   public isSaving: boolean = false;
 
   // Constructor method.
-  constructor(private requestService: RequestService) {}
+  constructor(
+    private fb: FormBuilder,
+    private requestService: RequestService,
+    protected translate: TranslateService
+  ) {}
 
   // On init.
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+
+    // Build form data.
+    this.buildFormGroup();
+
+    // Get available plans.
+    this.plans = Object.keys(this.plansOptions).filter(String);
+
+  }
 
   // Save request.
   public save(): void {
 
     this.isSaving = true;
 
-    if (this.validateRequest()) {
+    if (this.formData.dirty && this.formData.valid) {
 
       
 
@@ -44,12 +72,24 @@ export class FormComponent implements OnInit {
 
   }
 
-  // Validate request.
-  private validateRequest(): boolean {
+  // Build form group.
+  private buildFormGroup(): void {
 
-    let isValid: boolean = true;
+    this.formData = this.fb.group({
+      cnpj: [this.request.cnpj, [Validators.required, Validators.minLength(3)]],
+      dataAd: [this.request.data, Validators.required],
+      empresa: [this.request.empresa, Validators.required],
+      minutos: [this.request.minutos, Validators.required],
+      plano: [this.request.plano, Validators.required],
+      tarifa: [this.request.tarifa, Validators.required],
+      valor: [this.request.valor, Validators.required]
+    });
+    this.controls = this.formData.controls;
 
-    return isValid;
+    const d: Date = this.formData.get('dataAd').value;
+    this.activeDate = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate(); 
+
+    this.isLoading = false;
 
   }
 

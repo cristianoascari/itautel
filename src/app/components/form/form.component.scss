@@ -1,0 +1,18 @@
+form {
+
+  display: grid;
+  gap: 20px;
+  grid-template-columns: auto 200px;
+
+  div.form-actions {
+    position: relative;
+    button {
+      position: absolute;
+      bottom: 28px;
+      right: 0;
+    }
+  }
+
+  .mat-form-field { width: 100%; }
+
+}

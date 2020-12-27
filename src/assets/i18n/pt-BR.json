@@ -16,6 +16,16 @@
       "SEND_DATE": "Data de envio",
       "TAX": "Tarifa"
     },
+    "ERRORS": {
+      "COMPANY": "Informe o nome da empresa",
+      "EIN": "Informe o CNPJ",
+      "ENTRY_DATE": "Informe a data de adesão",
+      "MINUTES": "Informe os minutos",
+      "PLAN": "Selecione o plano",
+      "PLAN_VALUE": "Informe o valor do Plano",
+      "SEND_DATE": "Informe a data de envio",
+      "TAX": "Informe a tarifa"
+    },
     "FORM": {
       "CREATE_REQUEST": "Adicionar solicitação"
     },

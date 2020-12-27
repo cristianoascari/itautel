@@ -9,3 +9,10 @@ export interface IRequest {
   tarifa: string;
   valor: string;
 }
+
+// Enumerator for plans list.
+export enum EPlan {
+  P30 = 'P30',
+  P60 = 'P60',
+  P120 = 'P120'
+}

@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // Third-party.
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -42,6 +43,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader { retur
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
 
     // Third-party.
     TranslateModule.forRoot({
