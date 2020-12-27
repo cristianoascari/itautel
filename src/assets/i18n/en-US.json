@@ -1,6 +1,9 @@
 {
   "GENERIC": {
+    "CANCEL": "Cancel",
     "CLOSE": "Close",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
     "HELP": "Help"
   },
   "REQUESTS": {
@@ -27,13 +30,16 @@
       "TAX": "Tax is required"
     },
     "FORM": {
-      "CREATE_REQUEST": "Create request"
+      "CREATE_REQUEST": "Create request",
+      "SAVE_UPDATES": "Save updates"
     },
     "TITLES": {
+      "EDIT_REQUEST": "Edit request",
       "FOLLOW_PROGRESS": "Here you can follow your requests progress",
       "INSERT_DATA": "Insert here register data for a new request",
       "MY_REQUESTS": "My requests",
-      "NEW_REQUEST": "New request"
+      "NEW_REQUEST": "New request",
+      "UPDATE_DATA": "Update request data"
     }
   },
   "TRANSLATE": {

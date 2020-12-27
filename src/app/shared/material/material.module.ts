@@ -12,14 +12,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatMomentDateModule, MomentDateAdapter } from '@angular/material-moment-adapter';
-// import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 // Components list.
 const MaterialComponents: any[] = [
-  // DateAdapter,
   MatButtonModule,
   MatDatepickerModule,
   MatDialogModule,
@@ -30,31 +29,14 @@ const MaterialComponents: any[] = [
   MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatMomentDateModule,
-  // MatNativeDateModule,
-  MatToolbarModule,
   MatSelectModule,
-  // MomentDateAdapter
+  MatSnackBarModule,
+  MatTableModule,
+  MatToolbarModule
 ];
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'LL',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
 
 @NgModule({
   exports: [MaterialComponents],
-  imports: [MaterialComponents],
-  providers: [
-    /*{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }*/
-  ]
+  imports: [MaterialComponents]
 })
 export class MaterialModule {}

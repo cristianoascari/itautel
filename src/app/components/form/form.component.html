@@ -1,6 +1,11 @@
-<h1 class="mat-body-strong">{{'REQUESTS.TITLES.NEW_REQUEST' | translate}}</h1>
+<h1 class="mat-body-strong">
+  {{'REQUESTS.TITLES.' + (newReq ? 'NEW_REQUEST' : 'EDIT_REQUEST') | translate}}
+  <button *ngIf="!newReq" mat-button color="accent" (click)="cancelEdit()">cancelar</button>
+</h1>
 
-<h2 class="mat-small">{{'REQUESTS.TITLES.INSERT_DATA' | translate}}</h2>
+<h2 class="mat-small">
+  {{'REQUESTS.TITLES.' + (newReq ? 'INSERT_DATA' : 'UPDATE_DATA') | translate}}
+</h2>
 
 <form *ngIf="!isLoading && formData" [formGroup]="formData" (ngSubmit)="save()">
 
@@ -23,7 +28,14 @@
       <mat-grid-tile [colspan]="1">
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>{{'REQUESTS.FIELDS.EIN' | translate}}</mat-label>
-          <input matInput formControlName="cnpj" id="cnpj" #cnpj>
+          <input
+            matInput
+            formControlName="cnpj"
+            id="cnpj"
+            #cnpj
+            [dropSpecialCharacters]="false"
+            mask="00.000.000/0000-00"
+          >
           <mat-hint *ngIf="controls.cnpj.touched && controls.cnpj.errors && controls.cnpj.errors.required">
             {{'REQUESTS.ERRORS.EIN' | translate}}
           </mat-hint>
@@ -35,7 +47,11 @@
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>{{'REQUESTS.FIELDS.PLAN' | translate}}</mat-label>
           <mat-select formControlName="plano" id="plano" #plano>
-            <mat-option *ngFor="let plan of plans" [value]="plan">{{plan}}</mat-option>
+            <mat-option
+              *ngFor="let plan of plans"
+              [value]="plan"
+              selected="plan === formData.get('plano').value"
+            >{{plan}}</mat-option>
           </mat-select>
           <!--<input matInput formControlName="plano" id="plano" #plano>-->
           <mat-hint *ngIf="controls.plano.touched && controls.plano.errors && controls.plano.errors.required">
@@ -48,7 +64,16 @@
       <mat-grid-tile [colspan]="1">
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>{{'REQUESTS.FIELDS.TAX' | translate}}</mat-label>
-          <input matInput formControlName="tarifa" id="tarifa" #tarifa>
+          <input
+            matInput
+            formControlName="tarifa"
+            id="tarifa"
+            #tarifa
+            [dropSpecialCharacters]="false"
+            prefix="R$ "
+            mask="separator.2"
+            thousandSeparator="."
+          >
           <mat-hint *ngIf="controls.tarifa.touched && controls.tarifa.errors && controls.tarifa.errors.required">
             {{'REQUESTS.ERRORS.TAX' | translate}}
           </mat-hint>
@@ -59,7 +84,7 @@
       <mat-grid-tile [colspan]="1">
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>{{'REQUESTS.FIELDS.MINUTES' | translate}}</mat-label>
-          <input matInput formControlName="minutos" id="minutos" #minutos>
+          <input matInput formControlName="minutos" id="minutos" #minutos suffix=" minutos" mask="0*">
           <mat-hint *ngIf="controls.minutos.touched && controls.minutos.errors && controls.minutos.errors.required">
             {{'REQUESTS.ERRORS.MINUTES' | translate}}
           </mat-hint>
@@ -70,7 +95,16 @@
       <mat-grid-tile [colspan]="1">
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>{{'REQUESTS.FIELDS.PLAN_VALUE' | translate}}</mat-label>
-          <input matInput formControlName="valor" id="valor" #valor>
+          <input
+            matInput
+            formControlName="valor"
+            id="valor"
+            #valor
+            [specialCharacters]="[',']"
+            [dropSpecialCharacters]="false"
+            prefix="R$ "
+            mask="0*,00"
+          >
           <mat-hint *ngIf="controls.valor.touched && controls.valor.errors && controls.valor.errors.required">
             {{'REQUESTS.ERRORS.PLAN_VALUE' | translate}}
           </mat-hint>
@@ -84,10 +118,7 @@
 
           <!--<input matInput type="date" formControlName="dataAd" id="dataAd" #dataAd [value]="formData.get('dataAd').value">-->
           <input matInput type="date" formControlName="dataAd" id="dataAd" #dataAd>
-          
-          <!--<input matInput [matDatepicker]="dtPicker" formControlName="dataAd" id="dataAd" #dataAd>
-          <mat-datepicker-toggle matSuffix [for]="dtPicker"></mat-datepicker-toggle>
-          <mat-datepicker #dtPicker></mat-datepicker>-->
+
           <!--<mat-hint *ngIf="controls.dataAd.touched && controls.dataAd.errors.required">
             {{'REQUESTS.ERRORS.ENTRY_DATE' | translate}}
           </mat-hint>-->
@@ -102,8 +133,8 @@
   <div class="form-actions">
 
     <!-- Save button. -->
-    <button mat-raised-button color="primary" type="submit" [disabled]="!formData.valid">
-      {{'REQUESTS.FORM.CREATE_REQUEST' | translate}}
+    <button mat-raised-button color="accent" type="submit" [disabled]="!formData.valid">
+      {{'REQUESTS.FORM.' + (newReq ? 'CREATE_REQUEST' : 'SAVE_UPDATES') | translate}}
     </button>
 
   </div>

@@ -10,6 +10,9 @@ import { environment } from '@env/environment';
 // App enumerators.
 import { EBroadcast } from '@app/core';
 
+// App interfaces.
+import { IRequest } from '@app/core';
+
 // App services.
 import { AuthService, BroadcastService } from '@app/core/';
 
@@ -19,6 +22,9 @@ import { AuthService, BroadcastService } from '@app/core/';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  // Selected request (update request).
+  public request: IRequest = null;
 
   // Status.
   public isLoading: boolean = true;
@@ -34,12 +40,18 @@ export class AppComponent {
     this.setDeafultLanguage();
 
     // Authenticate user.
-    this.authUser();
+    // this.authUser();
 
     // Listen to broadcast messages.
     this.listenToBroadcast();
 
   }
+
+  // Edit a request.
+  public editRequest(req: IRequest): void { this.request = req; }
+
+  // Cancel edit.
+  public cancelEdit(event?: any): void { this.request = null; }
 
   // Authenticate user.
   private authUser(): void {
@@ -77,7 +89,7 @@ export class AppComponent {
   // Set active language.
   private setLanguage(lang: string): void {
 
-    this.translate.use(lang);
+    this.translate.use(lang).subscribe(res => this.authUser());
     localStorage.setItem(environment.localStorage.language, lang);
 
   }

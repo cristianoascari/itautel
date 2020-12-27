@@ -1,1 +1,22 @@
-.list-container { margin: 20px 0; }
+.list-container {
+  
+  margin: 20px 0;
+  padding-bottom: 40px;
+
+  table {
+    
+    width: 100%;
+
+    .main-field {
+      font-weight: bold;
+      span {
+        clear: left;
+        display: block;
+        font-size: 10px;
+        font-weight: normal;
+      }
+    }
+
+  }
+
+}

@@ -2,7 +2,8 @@
 export interface IRequest {
   _id?: string;
   cnpj: string;
-  data: Date;
+  dataAd: Date;
+  dataEnv: Date;
   empresa: string;
   minutos: number;
   plano: string;

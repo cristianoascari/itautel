@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 // Third-party.
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
@@ -17,11 +18,16 @@ import { CoreModule } from '@app/core/core.module';
 import { MaterialModule } from '@app/shared/material/material.module';
 
 // App components.
+import { AlertComponent } from './shared/alert/alert.component';
 import { AppComponent } from '@app/app.component';
 import { FormComponent } from '@app/components/form/form.component';
+import { HelpComponent } from './components/help/help.component';
 import { HeaderComponent } from '@app/components/header/header.component';
 import { ListComponent } from '@app/components/list/list.component';
-import { HelpComponent } from './components/help/help.component';
+import { ListDialogComponent } from '@app/components/list/list.component';
+
+// NgxMask.
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader { return new TranslateHttpLoader(http); }
@@ -30,11 +36,13 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader { retur
   declarations: [
 
     // App components.
+    AlertComponent,
     AppComponent,
     FormComponent,
+    HelpComponent,
     HeaderComponent,
     ListComponent,
-    HelpComponent
+    ListDialogComponent
 
   ],
   imports: [
@@ -46,6 +54,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader { retur
     ReactiveFormsModule,
 
     // Third-party.
+    NgxMaskModule.forRoot(),
     TranslateModule.forRoot({
       defaultLanguage: 'pt-BR',
       loader: {

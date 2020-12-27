@@ -1,6 +1,9 @@
 {
   "GENERIC": {
+    "CANCEL": "Cancelar",
     "CLOSE": "Fechar",
+    "DELETE": "Excluir",
+    "EDIT": "Editar",
     "HELP": "Ajuda"
   },
   "REQUESTS": {
@@ -12,7 +15,7 @@
       "ID": "ID",
       "MINUTES": "Minutos",
       "PLAN": "Plano",
-      "PLAN_VALUE": "Valor do Plano",
+      "PLAN_VALUE": "Valor do plano",
       "SEND_DATE": "Data de envio",
       "TAX": "Tarifa"
     },
@@ -27,13 +30,16 @@
       "TAX": "Informe a tarifa"
     },
     "FORM": {
-      "CREATE_REQUEST": "Adicionar solicitação"
+      "CREATE_REQUEST": "Adicionar solicitação",
+      "SAVE_UPDATES": "Salvar alterações"
     },
     "TITLES": {
+      "EDIT_REQUEST": "Editar solicitação",
       "FOLLOW_PROGRESS": "Aqui você pode acompanhar o andamento de suas solicitações",
       "INSERT_DATA": "Insira aqui os dados cadastrais para uma nova solicitação",
       "MY_REQUESTS": "Minhas solicitações",
-      "NEW_REQUEST": "Nova solicitação"
+      "NEW_REQUEST": "Nova solicitação",
+      "UPDATE_DATA": "Atualize os dados da requisição"
     }
   },
   "TRANSLATE": {

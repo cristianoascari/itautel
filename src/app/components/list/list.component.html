@@ -1,7 +1,89 @@
 <section class="list-container">
 
   <h1 class="mat-body-strong">{{'REQUESTS.TITLES.MY_REQUESTS' | translate}}</h1>
-
   <h2 class="mat-small">{{'REQUESTS.TITLES.FOLLOW_PROGRESS' | translate}}</h2>
 
+  <table mat-table [dataSource]="requests">
+
+    <!-- Id -->
+    <ng-container matColumnDef="ID">
+      <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.ID' | translate}}</th>
+      <td mat-cell *matCellDef="let element" class="main-field">{{element._id}}</td>
+    </ng-container>
+
+    <!-- Company -->
+    <ng-container matColumnDef="Empresa">
+      <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.COMPANY' | translate}}</th>
+      <td mat-cell *matCellDef="let element" class="main-field" style="min-width: 200px; padding: 10px 0;">
+        {{element.empresa}}
+        <span>{{element.cnpj}}</span>
+      </td>
+    </ng-container>
+
+    <!-- Plan -->
+    <ng-container matColumnDef="Plano">
+      <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.PLAN' | translate}}</th>
+      <td mat-cell *matCellDef="let element" class="main-field">{{element.plano}}</td>
+    </ng-container>
+
+    <!-- Tax -->
+    <ng-container matColumnDef="Tarifa">
+      <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.TAX' | translate}}</th>
+      <td mat-cell *matCellDef="let element">R$ {{element.tarifa}}</td>
+    </ng-container>
+
+    <!-- Minutes -->
+    <ng-container matColumnDef="Minutos">
+      <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.MINUTES' | translate}}</th>
+      <td mat-cell *matCellDef="let element">{{element.minutos}}</td>
+    </ng-container>
+
+    <!-- Value -->
+    <ng-container matColumnDef="Valor do plano">
+      <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.PLAN_VALUE' | translate}}</th>
+      <td mat-cell *matCellDef="let element">R$ {{element.valor}}</td>
+    </ng-container>
+
+    <!-- Entry date -->
+    <ng-container matColumnDef="Data de adesão">
+      <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.ENTRY_DATE' | translate}}</th>
+      <td mat-cell *matCellDef="let element">{{element.dataAd | date: 'dd/MM/yyyy'}}</td>
+    </ng-container>
+
+    <!-- Send date -->
+    <ng-container matColumnDef="Data de envio">
+      <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.SEND_DATE' | translate}}</th>
+      <td mat-cell *matCellDef="let element">{{element.dataEnv | date: 'dd/MM/yyyy'}}</td>
+    </ng-container>
+
+    <!-- Action -->
+    <ng-container matColumnDef="Ação">
+      <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.ACTION' | translate}}</th>
+      <td mat-cell *matCellDef="let element" style="width: 50px;">
+        <button mat-icon-button [matMenuTriggerFor]="mnuAction" [matMenuTriggerData]="{id: element._id}">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Definitions. -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
 </section>
+
+<!-- Action menu. -->
+<mat-menu #mnuAction="matMenu">
+  <ng-template matMenuContent let-id="id">
+    <button mat-menu-item (click)="edit(id)">
+      <mat-icon>create</mat-icon>
+      <span>{{'GENERIC.EDIT' | translate}}</span>
+    </button>
+    <button mat-menu-item (click)="delete(id)">
+      <mat-icon>delete_forever</mat-icon>
+      <span>{{'GENERIC.DELETE' | translate}}</span>
+    </button>
+  </ng-template>
+</mat-menu>

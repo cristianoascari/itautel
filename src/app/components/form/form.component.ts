@@ -1,5 +1,5 @@
 // Angular modules.
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 // Third-party.
@@ -12,22 +12,25 @@ import { EPlan } from '@app/core';
 import { IRequest } from '@app/core';
 
 // App services.
-import { RequestService } from '@app/core';
+import { RequestService, UtilsService } from '@app/core';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnChanges, OnInit {
+
+  // Outputs.
+  @Output() cancelEditRequest: EventEmitter<any> = new EventEmitter<any>();
 
   // Request data.
+  public newReq: boolean = true;
   @Input() request: IRequest = this.buildRequest(true);
 
   // Form.
   public formData: any = null;
   public controls: FormControl = null;
-  public activeDate: string = null;
 
   // Plans.
   public plans: any[] = [];
@@ -41,8 +44,18 @@ export class FormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private requestService: RequestService,
-    protected translate: TranslateService
+    protected translate: TranslateService,
+    protected utilsService: UtilsService
   ) {}
+
+  // On changes.
+  public ngOnChanges(): void {
+
+    if (this.request && this.request._id && this.request._id !== this.formData.get('_id').value) {
+      this.buildFormGroup();
+    }
+
+  }
 
   // On init.
   public ngOnInit(): void {
@@ -62,7 +75,33 @@ export class FormComponent implements OnInit {
 
     if (this.formData.dirty && this.formData.valid) {
 
-      
+      this.request = {
+        cnpj: this.formData.get('cnpj').value,
+        dataAd: this.formData.get('dataAd').value,
+        dataEnv: new Date(),
+        empresa: this.formData.get('empresa').value,
+        minutos: this.formData.get('minutos').value,
+        plano: this.formData.get('plano').value,
+        tarifa: this.utilsService.getCurrencyValue(this.formData.get('tarifa').value),
+        valor: this.utilsService.getCurrencyValue(this.formData.get('valor').value),
+        _id: this.request._id || null
+      };
+
+      if (this.request._id) {
+
+        this.requestService.updateRequest(this.request)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+        .finally(() => this.isSaving = false);
+
+      } else {
+
+        this.requestService.createRequest(this.request)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+        .finally(() => this.isSaving = false);
+
+      }
 
     } else {
 
@@ -75,19 +114,23 @@ export class FormComponent implements OnInit {
   // Build form group.
   private buildFormGroup(): void {
 
+    const r: IRequest = this.request;
     this.formData = this.fb.group({
-      cnpj: [this.request.cnpj, [Validators.required, Validators.minLength(3)]],
-      dataAd: [this.request.data, Validators.required],
-      empresa: [this.request.empresa, Validators.required],
-      minutos: [this.request.minutos, Validators.required],
-      plano: [this.request.plano, Validators.required],
-      tarifa: [this.request.tarifa, Validators.required],
-      valor: [this.request.valor, Validators.required]
+      _id: [r ? r._id : null],
+      cnpj: [r ? r.cnpj : null, [Validators.required, Validators.minLength(3)]],
+      dataAd: [r ? r.dataAd : new Date(), Validators.required],
+      empresa: [r ? r.empresa : null, Validators.required],
+      minutos: [r ? r.minutos : null, Validators.required],
+      plano: [r ? r.plano : null, Validators.required],
+      tarifa: [r ? r.tarifa : null, Validators.required],
+      valor: [r ? r.valor : null, Validators.required]
     });
     this.controls = this.formData.controls;
 
+    this.newReq = r && r._id ? false : true;
+
     const d: Date = this.formData.get('dataAd').value;
-    this.activeDate = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate(); 
+    this.formData.get('dataAd').setValue(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
 
     this.isLoading = false;
 
@@ -102,7 +145,8 @@ export class FormComponent implements OnInit {
 
       r = {
         cnpj: null,
-        data: new Date(),
+        dataAd: new Date(),
+        dataEnv: new Date(),
         empresa: null,
         minutos: null,
         plano: null,
@@ -114,6 +158,16 @@ export class FormComponent implements OnInit {
     }
 
     return r;
+
+  }
+
+  // Cancel edit.
+  public cancelEdit(): void {
+
+    this.request = null;
+    this.buildRequest();
+    this.buildFormGroup();
+    this.cancelEditRequest.emit();
 
   }
 
