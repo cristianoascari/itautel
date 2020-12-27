@@ -34,6 +34,12 @@
       "CREATE_REQUEST": "Adicionar solicitação",
       "SAVE_UPDATES": "Salvar alterações"
     },
+    "MESSAGES": {
+      "CREATED": "Solicitação criada com sucesso!",
+      "DELETED": "Solicitação excluída com sucesso!",
+      "UNKNOWN": "Ocorreu um erro na requisição",
+      "UPDATED": "Solicitação atualizada com sucesso!"
+    },
     "TITLES": {
       "EDIT_REQUEST": "Editar solicitação",
       "FOLLOW_PROGRESS": "Aqui você pode acompanhar o andamento de suas solicitações",

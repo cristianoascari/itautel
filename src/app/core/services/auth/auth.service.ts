@@ -70,11 +70,11 @@ export class AuthService {
 
     let header: HttpHeaders;
     header = new HttpHeaders({
-      Accept: 'application/json',
+      /*Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      applicationId: environment.api.applicationId,
-      locale: this.translate.currentLang || 'pt-BR'
+      'Access-Control-Allow-Origin': '*',*/
+      applicationid: environment.api.applicationId,
+      // locale: this.translate.currentLang || 'pt-BR'
     });
     return header;
 

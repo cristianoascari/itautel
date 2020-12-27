@@ -7,4 +7,5 @@ export interface IBroadcast {
 // Enumerator for broadcast message keys.
 export enum EBroadcast {
   ChangeLanguage,
+  RequestUpdate
 }

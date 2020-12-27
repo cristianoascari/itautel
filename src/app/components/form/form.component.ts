@@ -10,13 +10,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from '@env/environment';
 
 // App enumerators.
-import { EPlan } from '@app/core';
+import { EBroadcast, EPlan } from '@app/core';
 
 // App interfaces.
 import { IRequest } from '@app/core';
 
 // App services.
-import { RequestService, UtilsService } from '@app/core';
+import { BroadcastService, RequestService, UtilsService } from '@app/core';
 
 @Component({
   selector: 'app-form',
@@ -46,6 +46,7 @@ export class FormComponent implements OnChanges, OnInit {
 
   // Constructor method.
   constructor(
+    private broadcastService: BroadcastService,
     private fb: FormBuilder,
     private requestService: RequestService,
     private snackBar: MatSnackBar,
@@ -89,7 +90,7 @@ export class FormComponent implements OnChanges, OnInit {
         plano: this.formData.get('plano').value,
         tarifa: this.utilsService.getCurrencyValue(this.formData.get('tarifa').value),
         valor: this.utilsService.getCurrencyValue(this.formData.get('valor').value),
-        _id: this.request._id || null
+        _id: this.request && this.request._id ? this.request._id : null
       };
 
       if (this.request._id) {
@@ -97,12 +98,13 @@ export class FormComponent implements OnChanges, OnInit {
         this.requestService.updateRequest(this.request)
         .then(res => {
           if (!environment.production) { console.log(res); }
-          this.snackBar.open('Requisição atualizada com sucesso!', 'OK', {duration: 4000});
+          this.snackBar.open(this.translate.instant('REQUESTS.MESSAGES.UPDATED'), 'OK', {duration: 4000});
           this.cancelEdit();
+          this.broadcastService.sendBroadcast(EBroadcast.RequestUpdate, 'update');
         })
         .catch(err => {
           if (!environment.production) { console.log(err); }
-          this.snackBar.open(err.message || 'Ocorreu um erro na requisição', 'OK');
+          this.snackBar.open(err.message || this.translate.instant('REQUESTS.MESSAGES.UNKNOWN'), 'OK');
         })
         .finally(() => this.isSaving = false);
 
@@ -111,12 +113,13 @@ export class FormComponent implements OnChanges, OnInit {
         this.requestService.createRequest(this.request)
         .then(res => {
           if (!environment.production) { console.log(res); }
-          this.snackBar.open('Requisição criada com sucesso!', 'OK', {duration: 4000});
+          this.snackBar.open(this.translate.instant('REQUESTS.MESSAGES.CREATED'), 'OK', {duration: 4000});
           this.resetForm();
+          this.broadcastService.sendBroadcast(EBroadcast.RequestUpdate, 'new');
         })
         .catch(err => {
           if (!environment.production) { console.log(err); }
-          this.snackBar.open(err.message || 'Ocorreu um erro na requisição', 'OK');
+          this.snackBar.open(err.message || this.translate.instant('REQUESTS.MESSAGES.UNKNOWN'), 'OK');
         })
         .finally(() => this.isSaving = false);
 
@@ -134,6 +137,12 @@ export class FormComponent implements OnChanges, OnInit {
   private buildFormGroup(): void {
 
     const r: IRequest = this.request;
+
+    if (r && r.dataAd) {
+      const arData: string[] = r.dataAd.toString().split('-');
+      r.dataAd = new Date(parseInt(arData[0], 10), parseInt(arData[1], 10) - 1, parseInt(arData[2], 10));
+    }
+
     this.formData = this.fb.group({
       _id: [r ? r._id : null],
       cnpj: [r ? r.cnpj : null, [Validators.required, Validators.minLength(18), Validators.maxLength(18)]],
@@ -148,8 +157,8 @@ export class FormComponent implements OnChanges, OnInit {
 
     this.newReq = r && r._id ? false : true;
 
-    const d: Date = this.formData.get('dataAd').value;
-    this.formData.get('dataAd').setValue(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
+    const dt: Date = this.formData.get('dataAd').value;
+    this.formData.get('dataAd').setValue(dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate());
 
     this.isLoading = false;
 
@@ -193,6 +202,7 @@ export class FormComponent implements OnChanges, OnInit {
   private resetForm(): void {
 
     this.formData.reset();
+    this.formData = null;
 
     this.request = null;
     this.buildRequest();
@@ -205,8 +215,6 @@ export class FormComponent implements OnChanges, OnInit {
     this.formData.controls.plano.setErrors(null);
     this.formData.controls.tarifa.setErrors(null);
     this.formData.controls.valor.setErrors(null);
-
-    this.isLoading = false;
 
   }
 

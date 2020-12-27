@@ -9,11 +9,14 @@ import { TranslateService } from '@ngx-translate/core';
 // App environment.
 import { environment } from '@env/environment';
 
+// App enumerators.
+import { EBroadcast } from '@app/core';
+
 // App interfaces.
 import { IRequest } from '@app/core';
 
 // App services.
-import { RequestService } from '@app/core';
+import { BroadcastService, RequestService } from '@app/core';
 
 @Component({
   selector: 'app-list',
@@ -37,6 +40,7 @@ export class ListComponent implements OnInit {
 
   // Constructor method.
   constructor(
+    private broadcastService: BroadcastService,
     private dialog: MatDialog,
     private requestService: RequestService,
     private snackBar: MatSnackBar,
@@ -46,12 +50,28 @@ export class ListComponent implements OnInit {
   // On init.
   public ngOnInit(): void {
 
-    this.requests.push({_id: '123', dataEnv: new Date(), valor: '190,00', cnpj: '12.334.433/2999-44', dataAd: new Date(), empresa: 'ABC', minutos: 300, plano: 'P30', tarifa: '150,00'});
-    this.requests.push({_id: '456', dataEnv: new Date(), valor: '190,00', cnpj: '12.334.433/2999-55', dataAd: new Date(), empresa: 'DEF', minutos: 300, plano: 'P60', tarifa: '150,00'});
-    this.requests.push({_id: '789', dataEnv: new Date(), valor: '190,00', cnpj: '12.334.433/2999-66', dataAd: new Date(), empresa: 'GHI', minutos: 300, plano: 'P120', tarifa: '150,00'});
-    this.requests.push({_id: '101', dataEnv: new Date(), valor: '190,00', cnpj: '12.334.433/2999-77', dataAd: new Date(), empresa: 'JKL', minutos: 300, plano: 'P30', tarifa: '150,00'});
-    this.requests.push({_id: '102', dataEnv: new Date(), valor: '190,00', cnpj: '12.334.433/2999-88', dataAd: new Date(), empresa: 'MNO', minutos: 300, plano: 'P30', tarifa: '150,00'});
-    setTimeout(() => { this.isLoading = false; }, 1500);
+    // List to broadcasts.
+    this.listenToBroadcast();
+
+    // Get all requests.
+    this.getRequests(true);
+
+  }
+
+  // Get all requests.
+  private getRequests(loader: boolean = true): void {
+
+    this.isLoading = loader;
+    this.requestService.getRequests()
+    .then(res => {
+      this.requests = res as IRequest[];
+      this.requests.sort((a, b) => (a.empresa > b.empresa) ? 1 : ((b.empresa > a.empresa) ? -1 : 0));
+    })
+    .catch(err => {
+      if (!environment.production) { console.log(err); }
+      this.snackBar.open(err.message || 'Ocorreu um erro na requisição', 'OK');
+    })
+    .finally(() => this.isLoading = false);
 
   }
 
@@ -78,11 +98,12 @@ export class ListComponent implements OnInit {
           this.requestService.deleteRequest(id)
           .then(res => {
             if (!environment.production) { console.log(res); }
-            this.snackBar.open('Requisição excluída com sucesso!', 'OK', {duration: 4000});
+            this.snackBar.open(this.translate.instant('REQUESTS.MESSAGES.DELETED'), 'OK', {duration: 4000});
+            this.getRequests(false);
           })
           .catch(err => {
             if (!environment.production) { console.log(err); }
-            this.snackBar.open(err.message || 'Ocorreu um erro na requisição', 'OK');
+            this.snackBar.open(err.message || this.translate.instant('REQUESTS.MESSAGES.UNKNOWN'), 'OK');
           })
           .finally(() => this.isSaving = false);
 
@@ -107,6 +128,22 @@ export class ListComponent implements OnInit {
     cols.push(this.translate.instant('REQUESTS.FIELDS.SEND_DATE'));
     cols.push(this.translate.instant('REQUESTS.FIELDS.ACTION'));
     return cols;
+
+  }
+
+  // Listen to broadcast events.
+  private listenToBroadcast(): void {
+
+    this.broadcastService.events.subscribe(ev => {
+
+      switch (ev.key) {
+
+        // New/updated request.
+        case EBroadcast.RequestUpdate: this.getRequests(false); break;
+
+      }
+
+    });
 
   }
 
