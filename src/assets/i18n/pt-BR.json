@@ -22,6 +22,7 @@
     "ERRORS": {
       "COMPANY": "Informe o nome da empresa",
       "EIN": "Informe o CNPJ",
+      "EIN_INVALID": "CNPJ inválido",
       "ENTRY_DATE": "Informe a data de adesão",
       "MINUTES": "Informe os minutos",
       "PLAN": "Selecione o plano",

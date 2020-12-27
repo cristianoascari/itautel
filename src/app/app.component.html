@@ -1,3 +1,4 @@
+<!-- Content. -->
 <section *ngIf="!isLoading">
 
   <!-- Header. -->
@@ -13,4 +14,13 @@
 
   </section>
 
+</section>
+
+<!-- Loader. -->
+<section *ngIf="isLoading">
+  <mat-progress-bar
+    class="main-loader"
+    color="primary"
+    mode="indeterminate"
+  ></mat-progress-bar>
 </section>

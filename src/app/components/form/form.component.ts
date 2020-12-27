@@ -1,9 +1,13 @@
 // Angular modules.
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // Third-party.
 import { TranslateService } from '@ngx-translate/core';
+
+// App environment.
+import { environment } from '@env/environment';
 
 // App enumerators.
 import { EPlan } from '@app/core';
@@ -44,6 +48,7 @@ export class FormComponent implements OnChanges, OnInit {
   constructor(
     private fb: FormBuilder,
     private requestService: RequestService,
+    private snackBar: MatSnackBar,
     protected translate: TranslateService,
     protected utilsService: UtilsService
   ) {}
@@ -73,7 +78,7 @@ export class FormComponent implements OnChanges, OnInit {
 
     this.isSaving = true;
 
-    if (this.formData.dirty && this.formData.valid) {
+    if (this.formData.valid) {
 
       this.request = {
         cnpj: this.formData.get('cnpj').value,
@@ -90,15 +95,29 @@ export class FormComponent implements OnChanges, OnInit {
       if (this.request._id) {
 
         this.requestService.updateRequest(this.request)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        .then(res => {
+          if (!environment.production) { console.log(res); }
+          this.snackBar.open('Requisição atualizada com sucesso!', 'OK', {duration: 4000});
+          this.cancelEdit();
+        })
+        .catch(err => {
+          if (!environment.production) { console.log(err); }
+          this.snackBar.open(err.message || 'Ocorreu um erro na requisição', 'OK');
+        })
         .finally(() => this.isSaving = false);
 
       } else {
 
         this.requestService.createRequest(this.request)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        .then(res => {
+          if (!environment.production) { console.log(res); }
+          this.snackBar.open('Requisição criada com sucesso!', 'OK', {duration: 4000});
+          this.resetForm();
+        })
+        .catch(err => {
+          if (!environment.production) { console.log(err); }
+          this.snackBar.open(err.message || 'Ocorreu um erro na requisição', 'OK');
+        })
         .finally(() => this.isSaving = false);
 
       }
@@ -117,7 +136,7 @@ export class FormComponent implements OnChanges, OnInit {
     const r: IRequest = this.request;
     this.formData = this.fb.group({
       _id: [r ? r._id : null],
-      cnpj: [r ? r.cnpj : null, [Validators.required, Validators.minLength(3)]],
+      cnpj: [r ? r.cnpj : null, [Validators.required, Validators.minLength(18), Validators.maxLength(18)]],
       dataAd: [r ? r.dataAd : new Date(), Validators.required],
       empresa: [r ? r.empresa : null, Validators.required],
       minutos: [r ? r.minutos : null, Validators.required],
@@ -164,10 +183,30 @@ export class FormComponent implements OnChanges, OnInit {
   // Cancel edit.
   public cancelEdit(): void {
 
+    this.isLoading = true;
+    this.resetForm();
+    this.cancelEditRequest.emit();
+
+  }
+
+  // Reset form.
+  private resetForm(): void {
+
+    this.formData.reset();
+
     this.request = null;
     this.buildRequest();
     this.buildFormGroup();
-    this.cancelEditRequest.emit();
+
+    this.formData.controls.cnpj.setErrors(null)
+    this.formData.controls.dataAd.setErrors(null);
+    this.formData.controls.empresa.setErrors(null);
+    this.formData.controls.minutos.setErrors(null);
+    this.formData.controls.plano.setErrors(null);
+    this.formData.controls.tarifa.setErrors(null);
+    this.formData.controls.valor.setErrors(null);
+
+    this.isLoading = false;
 
   }
 

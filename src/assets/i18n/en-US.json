@@ -22,6 +22,7 @@
     "ERRORS": {
       "COMPANY": "Company name is required",
       "EIN": "CNPJ is required",
+      "EIN_INVALID": "Invalid CNPJ",
       "ENTRY_DATE": "Entry date is required",
       "MINUTES": "Minutes is required",
       "PLAN": "Select a plan",
@@ -35,7 +36,7 @@
     },
     "TITLES": {
       "EDIT_REQUEST": "Edit request",
-      "FOLLOW_PROGRESS": "Here you can follow your requests progress",
+      "FOLLOW_PROGRESS": "Follow here your requests progress",
       "INSERT_DATA": "Insert here register data for a new request",
       "MY_REQUESTS": "My requests",
       "NEW_REQUEST": "New request",

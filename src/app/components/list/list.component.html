@@ -1,9 +1,9 @@
 <section class="list-container">
 
   <h1 class="mat-body-strong">{{'REQUESTS.TITLES.MY_REQUESTS' | translate}}</h1>
-  <h2 class="mat-small">{{'REQUESTS.TITLES.FOLLOW_PROGRESS' | translate}}</h2>
+  <h2 class="mat-small">{{'REQUESTS.TITLES.FOLLOW_PROGRESS' | translate | lowercase}}</h2>
 
-  <table mat-table [dataSource]="requests">
+  <table *ngIf="!isLoading" mat-table [dataSource]="requests">
 
     <!-- Id -->
     <ng-container matColumnDef="ID">
@@ -12,7 +12,7 @@
     </ng-container>
 
     <!-- Company -->
-    <ng-container matColumnDef="Empresa">
+    <ng-container matColumnDef="{{'REQUESTS.FIELDS.COMPANY' | translate}}">
       <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.COMPANY' | translate}}</th>
       <td mat-cell *matCellDef="let element" class="main-field" style="min-width: 200px; padding: 10px 0;">
         {{element.empresa}}
@@ -21,43 +21,43 @@
     </ng-container>
 
     <!-- Plan -->
-    <ng-container matColumnDef="Plano">
+    <ng-container matColumnDef="{{'REQUESTS.FIELDS.PLAN' | translate}}">
       <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.PLAN' | translate}}</th>
       <td mat-cell *matCellDef="let element" class="main-field">{{element.plano}}</td>
     </ng-container>
 
     <!-- Tax -->
-    <ng-container matColumnDef="Tarifa">
+    <ng-container matColumnDef="{{'REQUESTS.FIELDS.TAX' | translate}}">
       <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.TAX' | translate}}</th>
       <td mat-cell *matCellDef="let element">R$ {{element.tarifa}}</td>
     </ng-container>
 
     <!-- Minutes -->
-    <ng-container matColumnDef="Minutos">
+    <ng-container matColumnDef="{{'REQUESTS.FIELDS.MINUTES' | translate}}">
       <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.MINUTES' | translate}}</th>
       <td mat-cell *matCellDef="let element">{{element.minutos}}</td>
     </ng-container>
 
     <!-- Value -->
-    <ng-container matColumnDef="Valor do plano">
+    <ng-container matColumnDef="{{'REQUESTS.FIELDS.PLAN_VALUE' | translate}}">
       <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.PLAN_VALUE' | translate}}</th>
       <td mat-cell *matCellDef="let element">R$ {{element.valor}}</td>
     </ng-container>
 
     <!-- Entry date -->
-    <ng-container matColumnDef="Data de adesão">
+    <ng-container matColumnDef="{{'REQUESTS.FIELDS.ENTRY_DATE' | translate}}">
       <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.ENTRY_DATE' | translate}}</th>
       <td mat-cell *matCellDef="let element">{{element.dataAd | date: 'dd/MM/yyyy'}}</td>
     </ng-container>
 
     <!-- Send date -->
-    <ng-container matColumnDef="Data de envio">
+    <ng-container matColumnDef="{{'REQUESTS.FIELDS.SEND_DATE' | translate}}">
       <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.SEND_DATE' | translate}}</th>
       <td mat-cell *matCellDef="let element">{{element.dataEnv | date: 'dd/MM/yyyy'}}</td>
     </ng-container>
 
     <!-- Action -->
-    <ng-container matColumnDef="Ação">
+    <ng-container matColumnDef="{{'REQUESTS.FIELDS.ACTION' | translate}}">
       <th mat-header-cell *matHeaderCellDef>{{'REQUESTS.FIELDS.ACTION' | translate}}</th>
       <td mat-cell *matCellDef="let element" style="width: 50px;">
         <button mat-icon-button [matMenuTriggerFor]="mnuAction" [matMenuTriggerData]="{id: element._id}">
@@ -71,6 +71,9 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
   </table>
+
+  <!-- Loader. -->
+  <mat-spinner *ngIf="isLoading" [diameter]="50"></mat-spinner>
 
 </section>
 

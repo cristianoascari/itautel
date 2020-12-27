@@ -4,7 +4,7 @@
 </h1>
 
 <h2 class="mat-small">
-  {{'REQUESTS.TITLES.' + (newReq ? 'INSERT_DATA' : 'UPDATE_DATA') | translate}}
+  {{'REQUESTS.TITLES.' + (newReq ? 'INSERT_DATA' : 'UPDATE_DATA') | translate | lowercase}}
 </h2>
 
 <form *ngIf="!isLoading && formData" [formGroup]="formData" (ngSubmit)="save()">
@@ -38,6 +38,9 @@
           >
           <mat-hint *ngIf="controls.cnpj.touched && controls.cnpj.errors && controls.cnpj.errors.required">
             {{'REQUESTS.ERRORS.EIN' | translate}}
+          </mat-hint>
+          <mat-hint *ngIf="controls.cnpj.touched && controls.cnpj.errors && controls.cnpj.errors.minlength">
+            {{'REQUESTS.ERRORS.EIN_INVALID' | translate}}
           </mat-hint>
         </mat-form-field>
       </mat-grid-tile>
@@ -133,10 +136,13 @@
   <div class="form-actions">
 
     <!-- Save button. -->
-    <button mat-raised-button color="accent" type="submit" [disabled]="!formData.valid">
+    <button mat-raised-button color="accent" type="submit" [disabled]="!formData.valid || isSaving">
       {{'REQUESTS.FORM.' + (newReq ? 'CREATE_REQUEST' : 'SAVE_UPDATES') | translate}}
     </button>
 
   </div>
 
 </form>
+
+<!-- Loader. -->
+<mat-spinner *ngIf="isLoading" [diameter]="50"></mat-spinner>

@@ -89,7 +89,7 @@ export class AppComponent {
   // Set active language.
   private setLanguage(lang: string): void {
 
-    this.translate.use(lang).subscribe(res => this.authUser());
+    this.translate.use(lang).subscribe(res => setTimeout(() => { this.authUser(); }, 1500));
     localStorage.setItem(environment.localStorage.language, lang);
 
   }
