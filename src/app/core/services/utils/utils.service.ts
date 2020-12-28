@@ -18,4 +18,20 @@ export class UtilsService {
 
   }
 
+  // Ensure value with decimal places.
+  public setDecimalPlaces(val: string): string {
+
+    if (!val.includes(',')) {
+      val += ',00';
+    } else {
+      const ar: string[] = val.split(',');
+      if (ar[1].length === 1) {
+        ar[1] += '0';
+      }
+      val = ar[0] + ',' + ar[1];
+    }
+    return val;
+
+  }
+
 }

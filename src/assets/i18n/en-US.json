@@ -37,6 +37,7 @@
     "MESSAGES": {
       "CREATED": "Request created!",
       "DELETED": "Request deleted!",
+      "NO_RESULTS": "There are no requests available.",
       "UNKNOWN": "Unknown error",
       "UPDATED": "Request updated!"
     },

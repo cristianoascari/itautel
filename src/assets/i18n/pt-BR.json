@@ -37,6 +37,7 @@
     "MESSAGES": {
       "CREATED": "Solicitação criada com sucesso!",
       "DELETED": "Solicitação excluída com sucesso!",
+      "NO_RESULTS": "Nenhuma solicitação localizada.",
       "UNKNOWN": "Ocorreu um erro na requisição",
       "UPDATED": "Solicitação atualizada com sucesso!"
     },

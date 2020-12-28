@@ -1,3 +1,5 @@
+@import "assets/styles/theme.scss";
+
 form {
 
   display: grid;
@@ -7,9 +9,15 @@ form {
   div.form-actions {
     position: relative;
     button {
+      background-color: mat-color($accentPalette);
+      color: #fff;
       position: absolute;
       bottom: 28px;
       right: 0;
+      &.mat-button-disabled {
+        background-color: #ddd;
+        color: #777;
+      }
     }
   }
 

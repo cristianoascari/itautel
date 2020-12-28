@@ -35,6 +35,7 @@
             #cnpj
             [dropSpecialCharacters]="false"
             mask="00.000.000/0000-00"
+            placeholder="00.000.000/0000-00"
           >
           <mat-hint *ngIf="controls.cnpj.touched && controls.cnpj.errors && controls.cnpj.errors.required">
             {{'REQUESTS.ERRORS.EIN' | translate}}
@@ -74,8 +75,9 @@
             #tarifa
             [dropSpecialCharacters]="false"
             prefix="R$ "
-            mask="separator.2"
-            thousandSeparator="."
+            mask="0*,00"
+            placeholder="R$ 0,00"
+            (blur)="formatPrice($event)"
           >
           <mat-hint *ngIf="controls.tarifa.touched && controls.tarifa.errors && controls.tarifa.errors.required">
             {{'REQUESTS.ERRORS.TAX' | translate}}
@@ -87,7 +89,15 @@
       <mat-grid-tile [colspan]="1">
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>{{'REQUESTS.FIELDS.MINUTES' | translate}}</mat-label>
-          <input matInput formControlName="minutos" id="minutos" #minutos suffix=" minutos" mask="0*">
+          <input
+            matInput
+            formControlName="minutos"
+            id="minutos"
+            #minutos
+            suffix=" minutos"
+            mask="0*"
+            placeholder="0 minutos"
+          >
           <mat-hint *ngIf="controls.minutos.touched && controls.minutos.errors && controls.minutos.errors.required">
             {{'REQUESTS.ERRORS.MINUTES' | translate}}
           </mat-hint>
@@ -107,6 +117,8 @@
             [dropSpecialCharacters]="false"
             prefix="R$ "
             mask="0*,00"
+            placeholder="R$ 0,00"
+            (blur)="formatPrice($event)"
           >
           <mat-hint *ngIf="controls.valor.touched && controls.valor.errors && controls.valor.errors.required">
             {{'REQUESTS.ERRORS.PLAN_VALUE' | translate}}
@@ -136,7 +148,7 @@
   <div class="form-actions">
 
     <!-- Save button. -->
-    <button mat-raised-button color="accent" type="submit" [disabled]="!formData.valid || isSaving">
+    <button mat-raised-button type="submit" [disabled]="!formData.valid || isSaving">
       {{'REQUESTS.FORM.' + (newReq ? 'CREATE_REQUEST' : 'SAVE_UPDATES') | translate}}
     </button>
 

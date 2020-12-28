@@ -3,7 +3,7 @@
   <h1 class="mat-body-strong">{{'REQUESTS.TITLES.MY_REQUESTS' | translate}}</h1>
   <h2 class="mat-small">{{'REQUESTS.TITLES.FOLLOW_PROGRESS' | translate | lowercase}}</h2>
 
-  <table *ngIf="!isLoading" mat-table [dataSource]="requests">
+  <table *ngIf="!isLoading && requests.length > 0" mat-table [dataSource]="requests">
 
     <!-- Id -->
     <ng-container matColumnDef="ID">
@@ -71,6 +71,10 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
   </table>
+
+  <p *ngIf="!isLoading && requests.length === 0" class="no-results">
+    {{'REQUESTS.MESSAGES.NO_RESULTS' | translate}}
+  </p>
 
   <!-- Loader. -->
   <mat-spinner *ngIf="isLoading" [diameter]="50"></mat-spinner>
