@@ -68,7 +68,7 @@ export class AppComponent {
       switch (ev.key) {
 
         // Change language.
-        case EBroadcast.ChangeLanguage: this.setLanguage(ev.value); break;
+        case EBroadcast.ChangeLanguage: this.setLanguage(ev.value, false); break;
 
       }
 
@@ -87,9 +87,12 @@ export class AppComponent {
   }
 
   // Set active language.
-  private setLanguage(lang: string): void {
+  private setLanguage(
+    lang: string,
+    firstRun: boolean = true
+  ): void {
 
-    this.translate.use(lang).subscribe(res => setTimeout(() => { this.authUser(); }, 1500));
+    this.translate.use(lang).subscribe(res => { if (firstRun) { setTimeout(() => { this.authUser(); }, 1500); }});
     localStorage.setItem(environment.localStorage.language, lang);
 
   }
