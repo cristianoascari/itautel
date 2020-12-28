@@ -1,7 +1,9 @@
 // Angular modules.
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 // Third-party.
 import { TranslateService } from '@ngx-translate/core';
@@ -23,7 +25,9 @@ import { BroadcastService, RequestService } from '@app/core';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements AfterViewInit, OnInit {
+
+  @ViewChild(MatSort) sort: MatSort;
 
   // Outputs.
   @Output() editRequest: EventEmitter<IRequest> = new EventEmitter<IRequest>();
@@ -33,6 +37,7 @@ export class ListComponent implements OnInit {
 
   // Table.
   public displayedColumns: string[] = this.buildTableColumns();
+  public dataSource: any = new MatTableDataSource(this.requests);
 
   // Status.
   public isLoading: boolean = true;
@@ -46,6 +51,9 @@ export class ListComponent implements OnInit {
     private snackBar: MatSnackBar,
     protected translate: TranslateService
   ) {}
+
+  // After view init.
+  public ngAfterViewInit(): void { this.dataSource.sort = this.sort; }
 
   // On init.
   public ngOnInit(): void {
@@ -66,6 +74,8 @@ export class ListComponent implements OnInit {
     .then(res => {
       this.requests = res as IRequest[];
       this.requests.sort((a, b) => (a.empresa > b.empresa) ? 1 : ((b.empresa > a.empresa) ? -1 : 0));
+      this.dataSource = new MatTableDataSource(this.requests);
+      this.dataSource.sort = this.sort;
     })
     .catch(err => {
       if (!environment.production) { console.log(err); }

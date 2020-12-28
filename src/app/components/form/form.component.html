@@ -7,7 +7,7 @@
   {{'REQUESTS.TITLES.' + (newReq ? 'INSERT_DATA' : 'UPDATE_DATA') | translate | lowercase}}
 </h2>
 
-<form *ngIf="!isLoading && formData" [formGroup]="formData" (ngSubmit)="save(); form.reset()" #form="ngForm">
+<form *ngIf="!isLoading && formData" [formGroup]="formData" (ngSubmit)="save(); form.resetForm()" #form="ngForm">
 
   <div class="form-fields">
 

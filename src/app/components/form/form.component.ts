@@ -202,32 +202,29 @@ export class FormComponent implements OnChanges, OnInit {
   private resetForm(): void {
 
     this.formData.reset();
+    this.formData.markAsUntouched();
     this.formData = null;
 
     this.request = null;
     this.buildRequest();
     this.buildFormGroup();
 
-    this.formData.controls.cnpj.setErrors(null);
+    /*this.formData.controls.cnpj.setErrors(null);
     this.formData.controls.dataAd.setErrors(null);
     this.formData.controls.empresa.setErrors(null);
     this.formData.controls.minutos.setErrors(null);
     this.formData.controls.plano.setErrors(null);
     this.formData.controls.tarifa.setErrors(null);
-    this.formData.controls.valor.setErrors(null);
+    this.formData.controls.valor.setErrors(null);*/
 
   }
 
   // Format entered value.
   public formatPrice(event: any): void {
 
-    console.log(event);
-
     if (event && event.target.value) {
-
       const val: string = event.target.value.replace('R$ ', '').trim();
       this.formData.get(event.target.id).setValue(this.utilsService.setDecimalPlaces(val));
-
     }
 
   }
